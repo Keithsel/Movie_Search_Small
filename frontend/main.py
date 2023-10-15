@@ -1,40 +1,49 @@
-from nicegui import ui
+import streamlit as st
 import os
 import json
 
 # Load the genre list from the JSON file
-genre_list = 'genre.json'
-current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, genre_list)
-with open(file_path, mode ='r') as f:
+import json
+
+with open('data/genre.json', 'r') as f:
     genres = json.load(f)
 
-# Create a text input for the search bar
-search_term = ui.input(placeholder='Search for a movie')
+def genre_filter():
+    selected_genres = []
+    excluded_genres = []
 
-# Create a button to trigger the search when clicked
-ui.button('Search', on_click=lambda: search_movies(search_term.value))
+    with st.expander('Genre', expanded=True):
+        col1, col2 = st.columns(2)
 
-# Create a collapsible panel for the genre filter
-with ui.select(genre for genre in genres):
-    pass
+        with col1:
+            for genre in genres[:len(genres)//2]:
+                state = st.checkbox(genre, key=genre)
 
-# Define the function to handle the search
-def search_movies(query):
-    # Call your search algorithm with the query
-    # results = search_algorithm(query)
+                if state:
+                    selected_genres.append(f"+{genre}")
 
-    # Display the results
-    # for result in results:
-    #     ui.markdown(result)
-    pass
+        with col2:
+            for genre in genres[len(genres)//2:]:
+                state = st.checkbox(genre, key=genre)
 
-# Define the function to handle genre changes
-def handle_genre_change(checked, genre):
-    if checked:
-        return '+' + genre
-    else:
-        return '-' + genre
+                if state:
+                    selected_genres.append(f"+{genre}")
 
-# Run the application
-ui.run()
+    return selected_genres, excluded_genres
+
+def main():
+    st.title('Movie Search Engine')
+
+    # Search bar
+    keyword = st.text_input("Search for a movie", '')
+
+    # Genre filter
+    selected_genres, excluded_genres = genre_filter()
+
+    # Display selected filters
+    if st.button('Search'):
+        st.write('Keyword:', keyword)
+        st.write('Selected Genres:', ', '.join(selected_genres))
+        st.write('Excluded Genres:', ', '.join(excluded_genres))
+
+main()
