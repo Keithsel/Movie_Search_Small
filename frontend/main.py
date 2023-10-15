@@ -1,5 +1,4 @@
 import streamlit as st
-import os
 import json
 
 # Load the genre list from the JSON file
