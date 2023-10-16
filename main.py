@@ -41,11 +41,11 @@ def main():
         st.write(f"Keyword: {keyword}")
         tag_str = ""
         if len(genres) > 0:
-            tag_str += f"{', '.join(genres)}, "
+            tag_str += f"{' '.join(genres)}, "
         if len(languages) > 0:
-            tag_str += f"{', '.join(languages)}, "
+            tag_str += f"{' '.join(languages)}, "
         if len(companies) > 0:
-            tag_str += f"{', '.join(companies)}, "
+            tag_str += f"{' '.join(companies)}, "
         tag_str += f"{user_rating}"
         st.write(f"Tags: {tag_str}")
 
