@@ -34,7 +34,7 @@ def main():
     # year_start, year_end = st.slider("Select Year Range:", min_value=1900, max_value=2023, value=(1900, 2023), step=1)
 
     # User rating filter
-    user_rating = st.slider("Select User Rating:", min_value=0.0, max_value=10.0, value=(1.0, 10.0), step=0.1)
+    user_rating = st.slider("Select User Rating:", min_value=0.0, max_value=10.0, value=(0.0, 10.0), step=0.1)
 
     # Search Button
     if st.button("Search"):
