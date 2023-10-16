@@ -1,35 +1,44 @@
 import streamlit as st
-import json
 import data.dataProcessing as dp
 
-
 def genre_filter():
-    selected_genres = []
-
     with st.expander('Genre', expanded=True):
-        col1 = st.columns(1)
+        selected_genres = st.multiselect("Select Genre(s):", dp.unique_genres)
 
-        with col1[0]:
-            for genre in dp.unique_genres:
-                state = st.checkbox(genre, key=genre)
+    return [f"+{genre}" for genre in selected_genres]
 
-                if state:
-                    selected_genres.append(f"+{genre}")
+def languages_filter():
+    with st.expander('Language', expanded=True):
+        selected_languages = st.multiselect("Select Language(s):", dp.unique_languages)
 
-    return selected_genres
+    return [f"+{language}" for language in selected_languages]
+
+def companies_filter():
+    with st.expander('Company', expanded=True):
+        selected_companies = st.multiselect("Select Company(s):", dp.unique_production_companies)
+
+    return [f"+{company}" for company in selected_companies]
 
 def main():
-    st.title('Movie Search Engine')
+    st.title("Movie Search Engine")
 
-    # Search bar
-    keyword = st.text_input("Search for a movie", '')
+    # Keyword search bar
+    keyword = st.text_input("Enter movie name or keyword:")
 
-    # Genre filter
-    selected_genres = genre_filter()
+    # Tags
+    genres = genre_filter()
+    languages = languages_filter()
+    companies = companies_filter()
 
-    # Display selected filters
-    if st.button('Search'):
-        st.write('Keyword:', keyword)
-        st.write('Selected Genres:', ', '.join(selected_genres))
+    # Year filter
+    # year_start, year_end = st.slider("Select Year Range:", min_value=1900, max_value=2023, value=(1900, 2023), step=1)
+
+    # User rating filter
+    user_rating = st.slider("Select User Rating:", min_value=0.0, max_value=10.0, value=(1.0, 10.0), step=0.1)
+
+    # Search Button
+    if st.button("Search"):
+        st.write(f"Keyword: {keyword}")
+        st.write(f"Tags: {', '.join(genres)}, {', '.join(languages)}, {', '.join(companies)}, {user_rating}")
 
 main()
