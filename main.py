@@ -1,8 +1,7 @@
 import streamlit as st
 import json
+import data.dataProcessing as dp
 
-with open('data/genre.json', 'r') as f:
-    genres = json.load(f)
 
 def genre_filter():
     selected_genres = []
@@ -11,7 +10,7 @@ def genre_filter():
         col1 = st.columns(1)
 
         with col1[0]:
-            for genre in genres:
+            for genre in dp.unique_genres:
                 state = st.checkbox(genre, key=genre)
 
                 if state:

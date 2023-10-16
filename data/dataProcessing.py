@@ -36,8 +36,15 @@ def preprocess_movie_data(file_path):
 
 
 # Sử dụng hàm và lưu kết quả vào biến df_processed
-df_processed = preprocess_movie_data("C:\\Users\\ADMIN\\VSC Projects\\Project\\movies_metadata.csv")
+import os
 
+# Construct the absolute file path
+file_path = os.path.join(os.getcwd(), "data", "movies_metadata.csv")
+
+# Call the preprocess_movie_data function with the absolute file path
+df_processed = preprocess_movie_data(file_path)
+
+# Get the unique genres
 unique_genres = list(set([genre for genres in df_processed['genres'] for genre in genres]))
 
 unique_production_countries = list(set([country for countries in df_processed['production_countries'] for country in countries]))
