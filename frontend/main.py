@@ -1,9 +1,6 @@
 import streamlit as st
 import json
 
-# Load the genre list from the JSON file
-import json
-
 with open('data/genre.json', 'r') as f:
     genres = json.load(f)
 
