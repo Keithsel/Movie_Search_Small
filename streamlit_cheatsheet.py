@@ -1,10 +1,38 @@
+# This is a summary of the docs, as of Streamlit v1.27.0.
+# Install & Import
+
+# streamlit run first_app.py
+
+# Import convention
 import streamlit as st
 
-#Display text
+# Command line
+
+# streamlit --help
+# streamlit run your_script.py
+# streamlit hello
+# streamlit config show
+# streamlit cache clear
+# streamlit docs
+# streamlit --version
+
+# Pre-release features
+
+# pip uninstall streamlit
+# pip install streamlit-nightly --upgrade
+
+# Magic commands
+
+# Magic commands implicitly
+# call st.write().
+'_This_ is some **Markdown***'
+my_variable
+'dataframe:', my_data_frame
+
+# Display text
 
 st.text('Fixed width text')
-st.markdown('_Markdown_') # see #*
-st.caption('Balloons. Hundreds of them...')
+st.markdown('_Markdown_') # see *
 st.latex(r''' e^{i\pi} + 1 = 0 ''')
 st.write('Most objects') # df, err, func, keras!
 st.write(['st', 'is <', 3]) # see *
@@ -12,7 +40,6 @@ st.title('My title')
 st.header('My header')
 st.subheader('My sub')
 st.code('for i in range(8): foo()')
-
 # * optional kwarg unsafe_allow_html = True
 
 # Display data
@@ -20,7 +47,7 @@ st.code('for i in range(8): foo()')
 st.dataframe(my_dataframe)
 st.table(data.iloc[0:10])
 st.json({'foo':'bar','fu':'ba'})
-st.metric(label="Temp", value="273 K", delta="1.2 K")
+st.metric('My metric', 42, 2)
 
 # Display media
 
@@ -28,19 +55,45 @@ st.image('./header.png')
 st.audio(data)
 st.video(data)
 
+# Display charts
+
+st.area_chart(df)
+st.bar_chart(df)
+st.line_chart(df)
+st.map(df)
+st.scatter_chart(df)
+
+st.altair_chart(chart)
+st.bokeh_chart(fig)
+st.graphviz_chart(fig)
+st.plotly_chart(fig)
+st.pydeck_chart(chart)
+st.pyplot(fig)
+st.vega_lite_chart(df)
+
+# Add widgets to sidebar
+
+# Just add it after st.sidebar:
+a = st.sidebar.radio('Select one:', [1, 2])
+
+# Or use "with" notation:
+with st.sidebar:
+  st.radio('Select one:', [1, 2])
+
 # Columns
 
+# Two equal columns:
 col1, col2 = st.columns(2)
-col1.write('Column 1')
-col2.write('Column 2')
+col1.write("This is column 1")
+col2.write("This is column 2")
 
-# Three columns with different widths
-col1, col2, col3 = st.columns([3,1,1])
-# col1 is wider
+# Three different columns:
+col1, col2, col3 = st.columns([3, 1, 1])
+# col1 is larger.
 
-# Using 'with' notation:
+# You can also use "with" notation:
 with col1:
-    st.write('This is column 1')
+  st.radio('Select one:', [1, 2])
 
 # Tabs
 
@@ -51,54 +104,48 @@ tab2.write("this is tab 2")
 
 # You can also use "with" notation:
 with tab1:
-    st.radio('Select one:', [1, 2])
+  st.radio('Select one:', [1, 2])
 
 # Control flow
 
 # Stop execution immediately:
 st.stop()
 # Rerun script immediately:
-st.experimental_rerun()
+st.rerun()
 
 # Group multiple widgets:
 with st.form(key='my_form'):
-    username = st.text_input('Username')
-    password = st.text_input('Password')
-    st.form_submit_button('Login')
-
-# Personalize apps for users
-
-# Show different content based on the user's email address.
-if st.user.email == 'jane@email.com':
-   display_jane_content()
-elif st.user.email == 'adam@foocorp.io':
-   display_adam_content()
-else:
-   st.write("Please contact us to get access!")
+  username = st.text_input('Username')
+  password = st.text_input('Password')
+  st.form_submit_button('Login')
 
 # Display interactive widgets
 
-st.button('Hit me')
-st.data_editor('Edit data', data)
-st.checkbox('Check me out')
-st.radio('Pick one:', ['nose','ear'])
-st.selectbox('Select', [1,2,3])
-st.multiselect('Multiselect', [1,2,3])
-st.slider('Slide me', min_value=0, max_value=10)
-st.select_slider('Slide to select', options=[1,'2'])
-st.text_input('Enter some text')
-st.number_input('Enter a number')
-st.text_area('Area for textual entry')
-st.date_input('Date input')
-st.time_input('Time entry')
-st.file_uploader('File uploader')
-st.download_button('On the dl', data)
-st.camera_input("一二三,茄子!")
-st.color_picker('Pick a color')
+st.button("Click me")
+st.download_button("Download file", data)
+st.link_button("Go to gallery", url)
+st.data_editor("Edit data", data)
+st.checkbox("I agree")
+st.toggle("Enable")
+st.radio("Pick one", ["cats", "dogs"])
+st.selectbox("Pick one", ["cats", "dogs"])
+st.multiselect("Buy", ["milk", "apples", "potatoes"])
+st.slider("Pick a number", 0, 100)
+st.select_slider("Pick a size", ["S", "M", "L"])
+st.text_input("First name")
+st.number_input("Pick a number", 0, 10)
+st.text_area("Text to translate")
+st.date_input("Your birthday")
+st.time_input("Meeting time")
+st.file_uploader("Upload a CSV")
+st.camera_input("Take a picture")
+st.color_picker("Pick a color")
 
-# Use widgets' returned values in variables
-for i in range(int(st.number_input('Num:'))): foo()
-if st.sidebar.selectbox('I:',['f']) == 'f': b()
+# Use widgets' returned values in variables:
+for i in range(int(st.number_input('Num:'))):
+  foo()
+if st.sidebar.selectbox('I:',['f']) == 'f':
+  b()
 my_slider_val = st.slider('Quinn Mallory', 1, 88)
 st.write(slider_val)
 
@@ -129,9 +176,8 @@ element.add_rows(df2)
 
 # Display code
 
-st.echo()
 with st.echo():
-    st.write('Code will be executed and printed')
+  st.write('Code will be executed and printed')
 
 # Placeholders, help, and options
 
@@ -150,7 +196,6 @@ st.help(pandas.DataFrame)
 st.get_option(key)
 st.set_option(key, value)
 st.set_page_config(layout='wide')
-st.experimental_show(objects)
 st.experimental_get_query_params()
 st.experimental_set_query_params(**params)
 
@@ -167,7 +212,6 @@ class MyConnection(ExperimentalBaseConnection[myconn.MyConnection]):
       return self._instance.query(query)
 
 # Optimize performance
-
 # Cache data objects
 
 # E.g. Dataframe computation, storing downloaded data, etc.
@@ -232,11 +276,26 @@ bar = st.progress(50)
 time.sleep(3)
 bar.progress(100)
 
+with st.status('Authenticating...') as s:
+  time.sleep(2)
+  st.write('Some long response.')
+  s.update(label='Response')
+
 st.balloons()
 st.snow()
-st.toast('Mr Stay-Puft')
+st.toast('Warming up...')
 st.error('Error message')
 st.warning('Warning message')
 st.info('Info message')
 st.success('Success message')
 st.exception(e)
+
+# Personalize apps for users
+
+# Show different content based on the user's email address.
+if st.user.email == 'jane@email.com':
+   display_jane_content()
+elif st.user.email == 'adam@foocorp.io':
+   display_adam_content()
+else:
+   st.write("Please contact us to get access!")
