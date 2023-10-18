@@ -1,5 +1,5 @@
 import streamlit as st
-import unique as tags
+import unique_sort as tags
 
 def genre_filter():
     with st.expander('Genre', expanded=True):
@@ -19,6 +19,12 @@ def companies_filter():
 
     return [f"+{company}" for company in selected_companies]
 
+def collection_filter():
+    with st.expander('Collection', expanded=True):
+        selected_collections = st.multiselect("Select Collection(s):", tags.unique_collection)
+
+    return [f"+{collection}" for collection in selected_collections]
+
 def main():
     st.title("Movie Search Engine")
 
@@ -29,6 +35,7 @@ def main():
     genres = genre_filter()
     languages = languages_filter()
     companies = companies_filter()
+    collection = collection_filter()
 
     # Year filter
     # year_start, year_end = st.slider("Select Year Range:", min_value=1900, max_value=2023, value=(1900, 2023), step=1)
@@ -41,11 +48,13 @@ def main():
         st.write(f"Keyword: {keyword}")
         tag_str = ""
         if len(genres) > 0:
-            tag_str += f"{' '.join(genres)}, "
+            tag_str += f"{' '.join(genres)} "
         if len(languages) > 0:
-            tag_str += f"{' '.join(languages)}, "
+            tag_str += f"{' '.join(languages)} "
         if len(companies) > 0:
-            tag_str += f"{' '.join(companies)}, "
+            tag_str += f"{' '.join(companies)} "
+        if len(collection) > 0:
+            tag_str += f"{' '.join(collection)} "
         tag_str += f"{user_rating}"
         st.write(f"Tags: {tag_str}")
 
