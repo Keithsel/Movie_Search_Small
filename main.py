@@ -1,5 +1,5 @@
 import streamlit as st
-import unique_sort as tags
+import unique as tags
 
 def genre_filter():
     with st.expander('Genre', expanded=True):
@@ -41,7 +41,7 @@ def main():
     # year_start, year_end = st.slider("Select Year Range:", min_value=1900, max_value=2023, value=(1900, 2023), step=1)
 
     # User rating filter
-    user_rating = st.slider("Select User Rating:", min_value=0.0, max_value=10.0, value=(0.0, 10.0), step=0.1)
+    # user_rating = st.slider("Select User Rating:", min_value=0.0, max_value=10.0, value=(0.0, 10.0), step=0.1)
     # TODO: trunc decimal to first decimal place
 
     # Search Button
@@ -56,7 +56,7 @@ def main():
             tag_str += f"{' '.join(companies)} "
         if len(collection) > 0:
             tag_str += f"{' '.join(collection)} "
-        tag_str += f"{user_rating}"
+        # tag_str += f"{user_rating}"
         st.write(f"Tags: {tag_str}")
 
 main()
