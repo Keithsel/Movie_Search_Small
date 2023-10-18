@@ -51,4 +51,3 @@ unique_production_countries = [country.replace(' ', '_') for country in unique_p
 
 unique_languages = list(set(''.join(str(items)) for items in df_processed['original_language']))
 
-print(unique_genres)
