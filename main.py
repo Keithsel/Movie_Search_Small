@@ -42,6 +42,7 @@ def main():
 
     # User rating filter
     user_rating = st.slider("Select User Rating:", min_value=0.0, max_value=10.0, value=(0.0, 10.0), step=0.1)
+    # TODO: trunc decimal to first decimal place
 
     # Search Button
     if st.button("Search"):
