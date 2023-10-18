@@ -1,21 +1,21 @@
 import streamlit as st
-import data.dataProcessing as dp
+import unique as tags
 
 def genre_filter():
     with st.expander('Genre', expanded=True):
-        selected_genres = st.multiselect("Select Genre(s):", dp.unique_genres)
+        selected_genres = st.multiselect("Select Genre(s):", tags.unique_genres)
 
     return [f"+{genre}" for genre in selected_genres]
 
 def languages_filter():
     with st.expander('Language', expanded=True):
-        selected_languages = st.multiselect("Select Language(s):", dp.unique_languages)
+        selected_languages = st.multiselect("Select Language(s):", tags.unique_language)
 
     return [f"+{language}" for language in selected_languages]
 
 def companies_filter():
     with st.expander('Company', expanded=True):
-        selected_companies = st.multiselect("Select Company(s):", dp.unique_production_companies)
+        selected_companies = st.multiselect("Select Company(s):", tags.unique_production_companies)
 
     return [f"+{company}" for company in selected_companies]
 
